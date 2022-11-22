@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	{% load static %}
+	{%block head%} {%endblock%}
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>{%block title%} {%endblock%}</title>
+	{% comment %} <meta name="description" content="Mere blog ka description"> {% endcomment %}
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- STYLES -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static 'css/slick.css' %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static 'css/all.min.css' %}" type="text/css" media="all">
+	
+	<link rel="stylesheet" href="{% static 'css/simple-line-icons.css' %}" type="text/css" media="all">
+	{% comment %}
+	<link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}" type="text/css" media="all"> {% endcomment %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+
+	{% comment %} for write and earn {% endcomment %}
+
+	{% comment %}
+	<link rel="shortcut icon" href="#"> {% endcomment %}
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+
+
+	<!-- dark mode -->
+
+
+
+
+</head>
+
+<body>
+
+	<!-- preloader -->
+	<div id="preloader">
+		<div class="book">
+			<div class="inner">
+				<div class="left"></div>
+				<div class="middle"></div>
+				<div class="right"></div>
+			</div>
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- site wrapper -->
+	<div class="site-wrapper">
+
+		<!-- header -->
+		<header class="header-default">
+			<nav class="navbar navbar-expand-lg">
+				<div class="container-xl mynav">
+					<!-- site logo -->
+					<a class="navbar-brand" id="img--logo--link" href="/">
+						<div>
+						<img id="img--logo" src="{% static 'images/logo.jpg' %}" alt="logo" />
+					</div>
+					</a>
+					<div class="collapse navbar-collapse">
+						<!-- menus -->
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item dropdown {% block homeactive %}{% endblock homeactive %}">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							{% for cat in category|slice:"0:3" %}
+							<li class="nav-item {% block categoryactive %}{% endblock categoryactive %}">
+							{% comment %} <li class="nav-item dropdown {% block categoryactive %}{% endblock categoryactive %}"> {% endcomment %}
+
+								<a class="nav-link" href="/blog/category/{{cat.url}}">{{cat.name}}</a>
+								{% comment %} <ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="category.html">Category</a></li>
+									<li><a class="dropdown-item" href="blog-single.html">Blog Single</a></li>
+									<li><a class="dropdown-item" href="blog-single-alt.html">Blog Single Alt</a></li>
+									<li><a class="dropdown-item" href="about.html">About</a></li>
+									<li><a class="dropdown-item" href="/contact/">Contact</a></li>
+								</ul> {% endcomment %}
+							</li>
+							{% endfor %}
+							<li class="nav-item dropdown">
+								{% comment %} <li class="nav-item dropdown {% block categoryactive %}{% endblock categoryactive %}"> {% endcomment %}
+								<a class="nav-link dropdown-toggle" href="/blog/category/">more</a>
+								{% comment %} <a class="nav-link" href="/blog/category/{{cat.url}}">{{cat.name}}</a> {% endcomment %}
+								{% comment %} <a class="nav-link dropdown-toggle" href="/blog/category/{{cat.url}}">{{cat.name}}</a> {% endcomment %}
+								<ul class="dropdown-menu">
+									{% for cat in category|slice:"3:" %}
+									<li><a class="dropdown-item" href="/blog/category/{{cat.url}}">{{cat.name}}</a></li>
+									{% endfor %}
+									
+									<li><a class="dropdown-item" href="/blog/category/">All Categories</a></li>
+								</ul>
+							</li>
+							<li class="nav-item {% block contactactive %}{% endblock contactactive %}">
+								<a class="nav-link" href="/contact">Contact</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="ml-auto form-inline ">
+						<!-- header right section -->
+						<div class="header-right " style="display: -webkit-box;">
+							<!-- social icons -->
+							<ul class="social-icons list-unstyled list-inline mb-0" style="margin-top:5px; margin-right: 10px;">
+								<li class="list-inline-item"><a href="https://www.facebook.com/people/Study-Rockerz/100087669906806/"><i class="fab fa-facebook-f"></i></a></li>
+								{% comment %} <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li> {% endcomment %}
+								<li class="list-inline-item"><a href="https://www.instagram.com/prashant246701/"><i class="fab fa-instagram"></i></a></li>
+								<!-- <li class="list-inline-item"><a href="#"><i class="fab fa-pinterest"></i></a></li> -->
+								<!-- <li class="list-inline-item"><a href="#"><i class="fab fa-medium"></i></a></li> -->
+								<li class="list-inline-item"><a href="https://www.youtube.com/channel/UCfuRYH1ISIVjK65n_gfti7Q"><i class="fab fa-youtube"></i></a></li>
+								{% comment %} <li class="list-inline-item"><a href="#"><i class="fab fa-whatsapp"></i></a></li> {% endcomment %}
+							</ul>
+
+							{% if user.is_authenticated %}
+							<ul class="navbar-nav header-login">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle " href='#' id="navbarDropdown" role="button"
+										data-toggle="dropdown"> Welcome {{request.user  | truncatechars:7}}</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a class="dropdown-item" href="/logout">Logout</a>
+
+									</div>
+								</li>
+							</ul>
+							{% else %}
+							<!-- Button to  trigger Login modal -->
+							<button type="button" class="btn btn-primary header-login" data-bs-toggle="modal"
+								data-bs-target="#loginModal">
+								Login
+							</button>
+
+							<!-- Button to trigger SignUp modal -->
+							<button type="button" class="btn btn-primary header-login" data-bs-toggle="modal"
+								data-bs-target="#signupModal">
+								SignUp
+							</button>
+							{% endif %}
+
+							<img src="{% static 'images/moon.png' %}" id="moonicon" alt="">
+							<!-- header buttons -->
+							<div class="header-buttons">
+								<button class="search icon-button">
+									<i class="icon-magnifier"></i>
+								</button>
+								<button class="burger-menu icon-button">
+									<span class="burger-icon"></span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</header>
+	</div>
+
+
+	{% for message in messages %}
+	<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+		<strong>Message : </strong> {{ message }}
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{% endfor %}
+
+
+
+	<!-- SignUp Modal -->
+	<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="signupModalTitle">SignUp here</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form action="/signup" method='post'>
+
+						<div class="form-group mb-3">
+							<label for="username" class="form-label">Username</label>
+							<input type="text" class="form-control" id="username" name="username"
+								placeholder="Choose a unique Username (Lowercase & alphanumeric" required>
+						</div>
+						<div class="form-group mb-3">
+							<label for="fname" class="form-label">First name</label>
+							<input type="text" class="form-control" id="fname" name="fname"
+								placeholder="Enter your First name" required>
+						</div>
+						<div class="form-group mb-3">
+							<label for="lname" class="form-label">Last name</label>
+							<input type="text" class="form-control" id="lname" name="lname"
+								placeholder="Enter your Last name" required>
+						</div>
+						<div class="form-group mb-3">
+							<label for="email" class="form-label">Email address</label>
+							<input type="email" class="form-control" name="email" id="email"
+								placeholder="name@example.com" required>
+						</div>
+						<div class="form-group mb-3">
+							<label for="pass1" class="form-label">Choose a Password</label>
+							<input type="password" class="form-control" name="pass1" id="pass1"
+								placeholder="Choose a strong password" required>
+						</div>
+						<div class="form-group mb-3">
+							<label for="pass2" class="form-label">Confirm Password</label>
+							<input type="password" class="form-control" name="pass2" id="pass2"
+								placeholder="Enter you Password again" required>
+						</div>
+						{% csrf_token %}
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Login Modal -->
+	<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="loginModalTitle">Login</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form action="/login" method='post'>
+
+						<div class="form-group mb-3">
+							<label for="loginusername" class="form-label">Username</label>
+							<input type="text" class="form-control" id="loginusername" name="loginusername"
+								placeholder="Enter your Username" required>
+						</div>
+						<div class="form-group mb-3">
+							<label for="loginpassword" class="form-label">Enter Your Password</label>
+							<input type="password" class="form-control" name="loginpassword" id="loginpassword"
+								placeholder="password" required>
+						</div>
+						{% csrf_token %}
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+	{% block body %}{% endblock %}
+
+	<div class="face-emogi-body">
+	<div>
+		<div class="face">
+			<div class="eyes">
+				<div class="eye"></div>
+				<div class="eye"></div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="progress-bar" id="myBar"></div>
+	<!-- footer -->
+	<footer>
+		<div class="container-xl">
+			<div class="footer-inner">
+				<div class="row d-flex align-items-center gy-4">
+					<!-- copyright text -->
+					<div class="col-md-4">
+						<span class="copyright">© 2022 Shantvi</span>
+					</div>
+
+					<!-- social icons -->
+					<div class="col-md-4 text-center">
+						<ul class="social-icons list-unstyled list-inline mb-0">
+							<li class="list-inline-item"><a href="https://www.facebook.com/people/Study-Rockerz/100087669906806/"><i class="fab fa-facebook-f"></i></a></li>
+							{% comment %} <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li> {% endcomment %}
+							<li class="list-inline-item"><a href="https://www.instagram.com/prashant246701/"><i class="fab fa-instagram"></i></a></li>
+							<!-- <li class="list-inline-item"><a href="#"><i class="fab fa-pinterest"></i></a></li> -->
+							<!-- <li class="list-inline-item"><a href="#"><i class="fab fa-medium"></i></a></li> -->
+							<li class="list-inline-item"><a href="https://www.youtube.com/channel/UCfuRYH1ISIVjK65n_gfti7Q"><i class="fab fa-youtube"></i></a></li>
+						</ul>
+					</div>
+
+					<!-- go to top button -->
+					<div class="col-md-4">
+						<a href="#" id="return-to-top" class="float-md-end"><i class="icon-arrow-up"></i>Back to
+							Top</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	</div><!-- end site wrapper -->
+
+	<!-- search popup area -->
+	<div class="search-popup">
+		<!-- close button -->
+		<button type="button" class="btn-close" aria-label="Close"></button>
+		<!-- content -->
+		<div class="search-content">
+			<div class="text-center">
+				<h3 class="mb-4 mt-0">Press ESC to close</h3>
+			</div>
+			<!-- form -->
+			<form method="get" action="/search" class="d-flex search-form">
+				<input class="form-control me-2" type="search" placeholder="Search and press enter ..."
+					aria-label="Search" name="query" id="query">
+				<button class="btn btn-default btn-lg" type="submit"><i class="icon-magnifier"></i></button>
+			</form>
+		</div>
+	</div>
+
+	<!-- canvas menu -->
+	<div class="canvas-menu d-flex align-items-end flex-column">
+		<!-- close button -->
+		<button type="button" class="btn-close" aria-label="Close"></button>
+
+		<!-- logo -->
+		<div class="logo img--logo--link">
+			<img id="img--logo" src="{% static 'images/logo.jpg' %}" alt="logo" />
+		</div>
+
+		<!-- menu -->
+		<nav>
+			<ul class="vertical-menu">
+				{% if user.is_authenticated %}
+				<ul class="navbar-nav">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href='#' id="navbarDropdown" role="button"
+						data-toggle="dropdown"> Welcome {{request.user  | truncatechars:7}}</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" style="color: black;" href="/logout">Logout</a>
+							
+						</div>
+					</li>
+				</ul>
+				
+				{% else %}
+				
+				<li>
+						<!-- Button to  trigger Login modal -->
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+							data-bs-target="#loginModal">
+							Login
+						</button>
+						<!-- Button to trigger SignUp modal -->
+						<button type="button" class="btn btn-primary" style="left:3rem;" data-bs-toggle="modal"
+							data-bs-target="#signupModal">
+							SignUp
+						</button>
+				{% endif %}
+				</li>
+				<li class="active">
+					<a href="/">Home</a>
+				</li>
+				{% for cat in category %}
+				<li><a href="/blog/category/{{cat.url}}">{{cat.name}}</a></li>
+				{% endfor %}
+				
+				<li><a href="/about">About</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+		</nav>
+
+		
+
+		<!-- social icons -->
+		<ul class="social-icons list-unstyled list-inline mb-0 mt-auto w-100">
+			<li class="list-inline-item"><a href="https://www.facebook.com/people/Study-Rockerz/100087669906806/"><i class="fab fa-facebook-f"></i></a></li>
+			{% comment %} <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li> {% endcomment %}
+			<li class="list-inline-item"><a href="https://www.instagram.com/prashant246701/"><i class="fab fa-instagram"></i></a></li>
+			<!-- <li class="list-inline-item"><a href="#"><i class="fab fa-pinterest"></i></a></li> -->
+			<!-- <li class="list-inline-item"><a href="#"><i class="fab fa-medium"></i></a></li> -->
+			<li class="list-inline-item"><a href="https://www.youtube.com/channel/UCfuRYH1ISIVjK65n_gfti7Q"><i class="fab fa-youtube"></i></a></li>
+		</ul>
+	</div>
+
+	{% block js %} {% endblock js %}
+	<!-- JAVA SCRIPTS -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/slick.min.js' %}"></script>
+	<script src="{% static 'js/jquery.sticky-sidebar.min.js' %}"></script>
+	<script src="{% static 'js/custom.js' %}"></script>
+	<script>
+		// <!-- dark theme -->
+		var icon = document.getElementById("moonicon");
+
+		icon.onclick = function () {
+			document.body.classList.toggle("light-theme");
+			if (document.body.classList.contains("light-theme") == false) {
+				icon.src = "{% static 'images/sun.png' %}";
+			}
+			else {
+				icon.src = "{% static 'images/moon.png' %}";
+			}
+		}
+
+		// <!-- face emogi  -->
+		document.addEventListener("mousemove", eyeball);
+  		function eyeball() {
+    		var eye = document.querySelectorAll(".eye");
+    		eye.forEach(function (eye) {
+      			let x = eye.getBoundingClientRect().left + eye.clientWidth / 2;
+      			let y = eye.getBoundingClientRect().top + eye.clientHeight / 2;
+      			let radian = Math.atan2(event.pageX - x, event.clientY - y);
+      			let rot = radian * (180 / Math.PI) * -1 + 270;
+      			eye.style.transform = "rotate(" + rot + "deg)";
+    		});
+  		}
+
+	// When the user scrolls the page, execute myFunction 
+	window.onscroll = function() {myFunction()};
+
+	function myFunction() {
+  		var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  		var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  		var scrolled = (winScroll / height) * 100;
+  		document.getElementById("myBar").style.width = scrolled + "%";
+	}
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,366 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load humanize %}
+{% load extras %}
+
+{%block head%}
+<meta property="og:title" content="{{post.title}}" />
+<meta property="og:description" content="{{post.title}}" />
+<meta property="og:url" content="http://127.0.0.1:8000/blog/{{post.slug}}" />
+<meta property="og:image" content="http://127.0.0.1:8000/blog/../../{{post.featured_image}}" />
+
+<meta name="description" property="og:description" content="{{post.description}}">
+<meta name="keywords" content="{% for i in all_tags %}{{i.name |safe|striptags| truncatechars:95}},{% endfor %}">
+<meta name="author" content="{{post.author}}">
+{%endblock%}
+
+{%block title%}
+{{post.title}} 
+{%endblock%}
+{% block homeactive %}active{% endblock homeactive %}
+
+{% block body %}
+<!-- cover header -->
+<section class="single-cover data-bg-image" data-bg-image=../../{{post.featured_image}}>
+
+    <div class="container-xl">
+
+        <div class="cover-content post">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/blog/category/{{post.category.url}}">{{post.category}}</a></li>
+                </ol>
+            </nav>
+
+            <!-- post header -->
+            <div class="post-header">
+                <h1 class="title mt-0 mb-3">{{post.title}}</h1>
+                <ul class="meta list-inline mb-0">
+                    <li class="list-inline-item">
+                        <a href="#">
+                        {{post.author}}
+                        </a>
+                    </li>
+                    <li class="list-inline-item"><a href="/blog/section/">{{post.section}}</a></li>
+                    <li class="list-inline-item">{{post.timeStamp}}</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- section main content -->
+<section class="main-content">
+    <div class="container-xl">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-8">
+                <div>
+                    <p><i class="bi bi-bar-chart"> {{blog_view_count.post_views}}</i></p>
+                </div>
+                <!-- post single -->
+                <div class="post post-single">
+                    <!-- post content -->
+                    <div class="post-content clearfix">
+                        {{post.content|safe}}
+                    </div>
+                    <!-- post bottom section -->
+                    <div class="post-bottom">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-6 col-12 text-center text-md-start">
+                                <!-- tags -->
+                                {% for i in tags %}
+                                <a href="/blog/tags/{{i.name}}" class="tag">#{{i}}</a>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- social icons -->
+                                <ul class="social-icons list-unstyled list-inline mb-0 float-md-end">
+                                    <li class="list-inline-item" ><a href="https://t.me/share/url?url=http://127.0.0.1:8000/blog/{{post.slug }}&text={{post.title }}" style="color: #00b9ff;"><i class="fab fa-telegram"></i></a></li>
+									<li class="list-inline-item" ><a href="whatsapp://send?text=http://127.0.0.1:8000/blog/{{post.slug }}" data-action="share/whatsapp/share" target="_blank" style="color: lime;"><i class="fab fa-whatsapp"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="spacer" data-height="50"></div>
+
+                <div class="spacer" data-height="50"></div>
+
+                <!-- section header -->
+                <div class="section-header">
+                    <h3 class="section-title">Comments({{comments.count}})</h3>
+                    <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                </div>
+                <!-- post comments -->
+                <div class="comments bordered padding-30 rounded">
+
+                    <ul class="comments">
+                        <!-- comment item -->
+                        {% for comment in comments %}
+                        <li class="comment rounded">
+                            <div class="thumb col-md-1 comment-logo">
+                                <img class="rounded mx-auto d-block w-100 p-2" src="{% static 'images/user.png' %}" alt="Image" />
+                            </div>
+                            <div class="details">
+                                <h4 class="name"><a href="#">{{comment.user.username}}</a></h4>
+                                <span class="comment-date">{{comment.timestamp| naturaltime}}</span>
+                                <p>{{comment.comment}}</p>
+                                {% comment %} <a href="#" class="btn btn-default btn-sm">Reply</a> {% endcomment %}
+                                <div class="reply mx-0">
+                                    {% if user.is_authenticated %}
+                                    <button class="btn btn-default btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#replyBox{{comment.sno}}" aria-expanded="false" aria-controls="replyBox{{comment.sno}}">
+                                        Reply
+                                    </button>
+                                    <div class="collapse" id="replyBox{{comment.sno}}">
+                                        <div class="card card-body my-2">
+                                            <form action="/blog/postComment" method="post">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="comment">Post a reply </label>
+                                                    <input type="text" class="form-control" name="comment" placeholder="Enter comment here">
+                                                    <input type="hidden" name="slug" value="{{post.slug}}" >
+                                                    <input type="hidden" name="parentSno" value="{{comment.sno}}">
+                                                </div>
+                                                {% comment %} <input type="hidden" name="postSno" value="{{post.sno}}"> {% endcomment %}
+                                                {% comment %} <input type="hidden" name="postSno" value="{{post.slug}}"> {% endcomment %}
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                        <button class="btn btn-default btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#replyBox{{comment.sno}}" aria-expanded="false" aria-controls="replyBox{{comment.sno}}">
+                                            Login to reply
+                                        </button>
+                                    {% endif %}
+                                    <div class="replies my-2 ">
+                                            {% for reply in replyDict|get_val:comment.sno %}
+                                                <div class="row my-2">
+                                                        <div class="col-md-1 ">
+                                                            <img class="rounded mx-auto d-block w-100" src="{% static 'images/user.png' %}" alt="Image" />
+                                                        </div>
+                                                    <div class="col-md-11">
+                                                        <div class="col-md-11 ">
+                                                            <b> {{reply.user.username}} </b> <span class="badge badge-secondary ">{{reply.timestamp| naturaltime}}</span>
+                                                            <div>{{reply.comment}}</div>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="spacer" data-height="50"></div>
+
+                <!-- section header -->
+                <div class="section-header">
+                    <h3 class="section-title">Leave Comment</h3>
+                    <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                </div>
+                <!-- comment form -->
+                <div class="comment-form rounded bordered padding-30">
+                    {% if user.is_authenticated %}
+                        <form id="comment-form" action="/blog/postComment" class="comment-form" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="column col-md-12">
+                                    <!-- Comment textarea -->
+                                    <div class="form-group">
+                                        <textarea name="comment" id="InputComment" class="form-control" rows="4" placeholder="Your comment here..." required="required"></textarea>
+                                        <input type="hidden" name="slug" value="{{post.slug}}" >
+                                        <input type="hidden" name="parentSno" value="">
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default">Submit</button><!-- Submit Button -->
+
+                        </form>
+                        {% else %}
+                            Please login to post a comment 
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+
+                <!-- sidebar -->
+                <div class="sidebar">
+                    <!-- widget about -->
+                    <div class="widget rounded">
+                        <div class="widget-about data-bg-image text-center" data-bg-image="{% static 'images/map-bg.png' %}">
+                            <img src="{% static 'images/logo.jpg' %}" alt="logo" class="mb-4 logo-aboutus" />
+                            <p class="mb-4">Hello, We’re content writer , serving true and best content for education .</p>
+                            <ul class="social-icons list-unstyled list-inline mb-0">
+                                <li class="list-inline-item"><a href="https://www.facebook.com/people/Study-Rockerz/100087669906806/"><i class="fab fa-facebook-f"></i></a></li>
+			                    <li class="list-inline-item"><a href="https://www.instagram.com/prashant246701/"><i class="fab fa-instagram"></i></a></li>
+			                    <li class="list-inline-item"><a href="https://www.youtube.com/channel/UCfuRYH1ISIVjK65n_gfti7Q"><i class="fab fa-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- widget popular posts -->
+                    <div class="widget rounded">
+                        <div class="widget-header text-center">
+                            <h3 class="widget-title">Popular Posts</h3>
+                            <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                        </div>
+                        <div class="widget-content">
+                            <!-- post -->
+                            {% for i in Popular|slice:"0:4" %}
+                            <div class="post post-list-sm circle">
+                                <div class="thumb circle">
+                                    <span class="number">{{ forloop.counter }}</span>
+                                    <a href="/blog/{{i.slug}}">
+                                        <div class="inner">
+                                            <img src="../../{{i.featured_image}}" alt="post-img" />
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="details clearfix">
+                                    <h6 class="post-title my-0"><a href="/blog/{{i.slug}}">{{i.title | truncatechars:70}}</a></h6>
+                                    <ul class="meta list-inline mt-1 mb-0">
+                                        <li class="list-inline-item"><i class="bi bi-bar-chart"> {{i.post_views}}</i></li>
+                                        <li class="list-inline-item">{{i.timeStamp}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>		
+                    </div>
+
+                    <!-- widget categories -->
+                    <div class="widget rounded">
+                        <div class="widget-header text-center">
+                            <h3 class="widget-title">Explore Topics</h3>
+                            <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                        </div>
+                        <div class="widget-content">
+                            <ul class="list">
+                                {% for i in category %}
+                                <li><a href="/blog/category/{{i.url}}">{{i.name}}</a><span></span></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- widget newsletter -->
+                    {% if user.is_authenticated %}
+						{% comment %} <div class="widget rounded">
+							<div class="widget-header text-center">
+								<h3 class="widget-title">Newsletter</h3>
+								<img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+							</div>
+							<div class="widget-content">
+								<span class="newsletter-headline text-center mb-3">Thanks for being our subscribers!</span>
+								<form>
+									<div class="btn btn-default btn-full">Welcome {{request.user  | truncatechars:7}}</div>
+								</form>
+							</div>		
+						</div> {% endcomment %}
+					{% else %}
+						<div class="widget rounded">
+							<div class="widget-header text-center">
+								<h3 class="widget-title">Newsletter</h3>
+								<img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+							</div>
+							<div class="widget-content">
+								<span class="newsletter-headline text-center mb-3">Join 70,000 subscribers!</span>
+								<form>
+									<button class="btn btn-default btn-full mb-2" data-bs-target="#loginModal" data-bs-toggle="modal" type="button">Login</button>
+									<button class="btn btn-default btn-full" data-bs-target="#signupModal" data-bs-toggle="modal" type="button">Sign Up</button>
+								</form>
+								<span class="newsletter-privacy text-center mt-3">By signing up, you agree to our <a href="#">Privacy Policy</a></span>
+							</div>		
+						</div>
+					{% endif %}
+
+                    <!-- widget post carousel -->
+                    <div class="widget rounded">
+                        <div class="widget-header text-center">
+                            <h3 class="widget-title">Celebrations</h3>
+                            <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                        </div>
+                        <div class="widget-content">
+                            <div class="inner">
+                                <img src="{% static 'images/achievement.png'%}" class="achievement_img" alt="post-title" />
+                            </div>
+                            <div class="post-carousel-widget">
+                                <!-- post -->
+                                <div class="post post-carousel">
+                                    <h5 class="post-title mb-0 mt-4"><a href="https://www.youtube.com">1K subscribers completed today!!!</a></h5>
+                                    <ul class="meta list-inline mt-2 mb-0">
+                                        <li class="list-inline-item"><a href="https://www.youtube.com">YouTube</a></li>
+                                        <li class="list-inline-item">29 March 2021</li>
+                                    </ul>
+                                </div>
+                                <!-- post -->
+                                <div class="post post-carousel">
+                                    <h5 class="post-title mb-0 mt-4"><a href="blog-single.html">1K followers completed today on instagram!!!</a></h5>
+                                    <ul class="meta list-inline mt-2 mb-0">
+                                        <li class="list-inline-item"><a href="#">Instagram</a></li>
+                                        <li class="list-inline-item">29 March 2021</li>
+                                    </ul>
+                                </div>
+                                <!-- post -->
+                                <div class="post post-carousel">
+                                    <h5 class="post-title mb-0 mt-4"><a href="blog-single.html">Visitors - $$$$$</a></h5>
+                                    <ul class="meta list-inline mt-2 mb-0">
+                                        <li class="list-inline-item"><a href="/">Website</a></li>
+                                        <li class="list-inline-item">Start date</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- carousel arrows -->
+                            <div class="slick-arrows-bot">
+                                <button type="button" data-role="none" class="carousel-botNav-prev slick-custom-buttons" aria-label="Previous"><i class="icon-arrow-left"></i></button>
+                                <button type="button" data-role="none" class="carousel-botNav-next slick-custom-buttons" aria-label="Next"><i class="icon-arrow-right"></i></button>
+                            </div>
+                        </div>		
+                    </div>
+
+                    <!-- widget advertisement -->
+                    {% comment %} <div class="widget no-container rounded text-md-center">
+                        <span class="ads-title">- Sponsored Ad -</span>
+                        <a href="#" class="widget-ads">
+                            <img src="images/ads/ad-360.png" alt="Advertisement" />	
+                        </a>
+                    </div> {% endcomment %}
+
+                    <!-- widget tags -->
+                    <div class="widget rounded">
+                        <div class="widget-header text-center">
+                            <h3 class="widget-title">Tag Clouds</h3>
+                            <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                        </div>
+                        <div class="widget-content">
+                            {% for i in all_tags %}
+                                <a href="/blog/tags/{{i.name}}" class="tag">#{{i.name}}</a>
+                            {% endfor %}
+                        </div>	
+                            
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<div class="spacer" data-height="50"></div>
+{% endblock %}

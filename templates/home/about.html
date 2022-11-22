@@ -1,0 +1,191 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load humanize %}
+{% load extras %}
+
+{%block head%}
+{%endblock%}
+
+{%block title%}
+About
+{%endblock%}
+{% block homeactive %}active{% endblock homeactive %}
+
+{% block body %}
+
+<!-- section main content -->
+<section class="main-content">
+    <div class="container-xl">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-8">
+                <h2>About</h2>
+                <p>We will trying you to give most important news and conclusion first . If You want to join our then follow us , your most welcome !</p>
+                <br>
+                <h4>Follow Us </h4>
+                <ul class="social-icons list-unstyled list-inline mb-0" style="margin-top:5px; margin-right: 10px;">
+                    <li class="list-inline-item"><a href="https://www.facebook.com/people/Study-Rockerz/100087669906806/"><i class="fab fa-facebook-f"></i></a></li>
+                    {% comment %} <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li> {% endcomment %}
+                    <li class="list-inline-item"><a href="https://www.instagram.com/prashant246701/"><i class="fab fa-instagram"></i></a></li>
+                    <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-pinterest"></i></a></li> -->
+                    <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-medium"></i></a></li> -->
+                    <li class="list-inline-item"><a href="https://www.youtube.com/channel/UCfuRYH1ISIVjK65n_gfti7Q"><i class="fab fa-youtube"></i></a></li>
+                    {% comment %} <li class="list-inline-item"><a href="#"><i class="fab fa-whatsapp"></i></a></li> {% endcomment %}
+                </ul>
+            </div>
+
+            <div class="col-lg-4">
+
+                <!-- sidebar -->
+                <div class="sidebar">
+                    <!-- widget about -->
+                    <div class="widget rounded">
+                        <div class="widget-about data-bg-image text-center" data-bg-image="{% static 'images/map-bg.png' %}">
+                            <img src="{% static 'images/logo.jpg' %}" alt="logo" class="mb-4 logo-aboutus" />
+                            <p class="mb-4">Hello, We’re content writer , serving true and best content for education .</p>
+                            <ul class="social-icons list-unstyled list-inline mb-0">
+                                <li class="list-inline-item"><a href="https://www.facebook.com/people/Study-Rockerz/100087669906806/"><i class="fab fa-facebook-f"></i></a></li>
+			                    {% comment %} <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li> {% endcomment %}
+			                    <li class="list-inline-item"><a href="https://www.instagram.com/prashant246701/"><i class="fab fa-instagram"></i></a></li>
+			                    <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-pinterest"></i></a></li> -->
+			                    <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-medium"></i></a></li> -->
+			                    <li class="list-inline-item"><a href="https://www.youtube.com/channel/UCfuRYH1ISIVjK65n_gfti7Q"><i class="fab fa-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- widget popular posts -->
+                    <div class="widget rounded">
+                        <div class="widget-header text-center">
+                            <h3 class="widget-title">Popular Posts</h3>
+                            <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                        </div>
+                        <div class="widget-content">
+                            <!-- post -->
+                            {% for i in Popular|slice:"0:4" %}
+                            <div class="post post-list-sm circle">
+                                <div class="thumb circle">
+                                    <span class="number">{{ forloop.counter }}</span>
+                                    <a href="/blog/{{i.slug}}">
+                                        <div class="inner">
+                                            <img src="../../{{i.featured_image}}" alt="post-img" />
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="details clearfix">
+                                    <h6 class="post-title my-0"><a href="/blog/{{i.slug}}">{{i.title | truncatechars:70}}</a></h6>
+                                    <ul class="meta list-inline mt-1 mb-0">
+                                        <li class="list-inline-item"><i class="bi bi-bar-chart"> {{i.post_views}}</i></li>
+                                        <li class="list-inline-item">{{i.timeStamp}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>		
+                    </div>
+
+                    <!-- widget categories -->
+                    <div class="widget rounded">
+                        <div class="widget-header text-center">
+                            <h3 class="widget-title">Explore Topics</h3>
+                            <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                        </div>
+                        <div class="widget-content">
+                            <ul class="list">
+                                {% for i in category %}
+                                <li><a href="/blog/category/{{i.url}}">{{i.name}}</a><span></span></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- widget newsletter -->
+                    {% if user.is_authenticated %}
+					{% else %}
+						<div class="widget rounded">
+							<div class="widget-header text-center">
+								<h3 class="widget-title">Newsletter</h3>
+								<img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+							</div>
+							<div class="widget-content">
+								<span class="newsletter-headline text-center mb-3">Join 70,000 subscribers!</span>
+								<form>
+									<button class="btn btn-default btn-full mb-2" data-bs-target="#loginModal" data-bs-toggle="modal" type="button">Login</button>
+									<button class="btn btn-default btn-full" data-bs-target="#signupModal" data-bs-toggle="modal" type="button">Sign Up</button>
+								</form>
+								<span class="newsletter-privacy text-center mt-3">By signing up, you agree to our <a href="#">Privacy Policy</a></span>
+							</div>		
+						</div>
+					{% endif %}
+
+                    <!-- widget post carousel -->
+                    <div class="widget rounded">
+                        <div class="widget-header text-center">
+                            <h3 class="widget-title">Celebrations</h3>
+                            <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                        </div>
+                        <div class="widget-content">
+                            <div class="inner">
+                                <img src="{% static 'images/achievement.png'%}" class="achievement_img" alt="post-title" />
+                            </div>
+                            <div class="post-carousel-widget">
+                                <!-- post -->
+                                <div class="post post-carousel">
+                                    <h5 class="post-title mb-0 mt-4"><a href="https://www.youtube.com">1K subscribers completed today!!!</a></h5>
+                                    <ul class="meta list-inline mt-2 mb-0">
+                                        <li class="list-inline-item"><a href="https://www.youtube.com">YouTube</a></li>
+                                        <li class="list-inline-item">29 March 2021</li>
+                                    </ul>
+                                </div>
+                                <!-- post -->
+                                <div class="post post-carousel">
+                                    <h5 class="post-title mb-0 mt-4"><a href="blog-single.html">1K followers completed today on instagram!!!</a></h5>
+                                    <ul class="meta list-inline mt-2 mb-0">
+                                        <li class="list-inline-item"><a href="#">Instagram</a></li>
+                                        <li class="list-inline-item">29 March 2021</li>
+                                    </ul>
+                                </div>
+                                <!-- post -->
+                                <div class="post post-carousel">
+                                    <h5 class="post-title mb-0 mt-4"><a href="blog-single.html">Visitors - $$$$$</a></h5>
+                                    <ul class="meta list-inline mt-2 mb-0">
+                                        <li class="list-inline-item"><a href="/">Website</a></li>
+                                        <li class="list-inline-item">Start date</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- carousel arrows -->
+                            <div class="slick-arrows-bot">
+                                <button type="button" data-role="none" class="carousel-botNav-prev slick-custom-buttons" aria-label="Previous"><i class="icon-arrow-left"></i></button>
+                                <button type="button" data-role="none" class="carousel-botNav-next slick-custom-buttons" aria-label="Next"><i class="icon-arrow-right"></i></button>
+                            </div>
+                        </div>		
+                    </div>
+
+
+                    <!-- widget tags -->
+                    <div class="widget rounded">
+                        <div class="widget-header text-center">
+                            <h3 class="widget-title">Tag Clouds</h3>
+                            <img src="{% static 'images/wave.svg'%}" class="wave" alt="wave" />
+                        </div>
+                        <div class="widget-content">
+                            {% for i in tags %}
+                                <a href="/blog/tags/{{i.name}}" class="tag">#{{i.name}}</a>
+                            {% endfor %}
+                        </div>	
+                            
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<div class="spacer" data-height="50"></div>
+{% endblock %}
