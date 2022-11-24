@@ -133,16 +133,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# MEDIA_URL = '/media/'
+MEDIA_URL = '/media/'
 
 if DEBUG==True:
     STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+    # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+    STATIC_ROOT = "/home/ubuntu/shantvi/aws_shantvi/aws_shantvi/static"
     # STATICFILES_DIRS =["/home/ubuntu/shantvi/aws_shantvi/aws_shantvi/static"]
 
 #     STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-    
+
 
 # MEDIA_ROOT= os.path.join(BASE_DIR, 'media/')
 
