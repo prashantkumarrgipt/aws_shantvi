@@ -138,7 +138,8 @@ STATIC_URL = '/static/'
 if DEBUG==True:
     STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 else:
-    STATIC_ROOT = "/home/ubuntu/shantvi/aws_shantvi/aws_shantvi/static"
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+    STATICFILES_DIRS =["/home/ubuntu/shantvi/aws_shantvi/aws_shantvi/static"]
 
 #     STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
     
