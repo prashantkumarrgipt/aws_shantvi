@@ -417,7 +417,20 @@
 	<script src="{% static 'js/slick.min.js' %}"></script>
 	<script src="{% static 'js/jquery.sticky-sidebar.min.js' %}"></script>
 	<script src="{% static 'js/custom.js' %}"></script>
-	
+	<script>
+		// <!-- dark theme -->
+		var icon = document.getElementById("moonicon");
+			
+		icon.onclick = function () {
+		  document.body.classList.toggle("light-theme");
+		  if (document.body.classList.contains("light-theme") == false) {
+		    icon.src = "{% static 'images/sun.png' %}";
+		  }
+		  else {
+		    icon.src = "{% static 'images/moon.png' %}";
+		  }
+		}
+	</script>
 
 </body>
 

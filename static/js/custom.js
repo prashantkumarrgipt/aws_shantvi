@@ -268,18 +268,7 @@ $(function(){
 // dark theme
 // =======================================================
 
-// <!-- dark theme -->
-var icon = document.getElementById("moonicon");
 
-icon.onclick = function () {
-  document.body.classList.toggle("light-theme");
-  if (document.body.classList.contains("light-theme") == false) {
-    icon.src = "{% static 'images/sun.png' %}";
-  }
-  else {
-    icon.src = "{% static 'images/moon.png' %}";
-  }
-}
 
 // <!-- face emogi  -->
 document.addEventListener("mousemove", eyeball);
