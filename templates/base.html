@@ -418,41 +418,7 @@
 	<script src="{% static 'js/jquery.sticky-sidebar.min.js' %}"></script>
 	<script src="{% static 'js/custom.js' %}"></script>
 	<script>
-		// <!-- dark theme -->
-		var icon = document.getElementById("moonicon");
-
-		icon.onclick = function () {
-			document.body.classList.toggle("light-theme");
-			if (document.body.classList.contains("light-theme") == false) {
-				icon.src = "{% static 'images/sun.png' %}";
-			}
-			else {
-				icon.src = "{% static 'images/moon.png' %}";
-			}
-		}
-
-		// <!-- face emogi  -->
-		document.addEventListener("mousemove", eyeball);
-  		function eyeball() {
-    		var eye = document.querySelectorAll(".eye");
-    		eye.forEach(function (eye) {
-      			let x = eye.getBoundingClientRect().left + eye.clientWidth / 2;
-      			let y = eye.getBoundingClientRect().top + eye.clientHeight / 2;
-      			let radian = Math.atan2(event.pageX - x, event.clientY - y);
-      			let rot = radian * (180 / Math.PI) * -1 + 270;
-      			eye.style.transform = "rotate(" + rot + "deg)";
-    		});
-  		}
-
-	// When the user scrolls the page, execute myFunction 
-	window.onscroll = function() {myFunction()};
-
-	function myFunction() {
-  		var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  		var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  		var scrolled = (winScroll / height) * 100;
-  		document.getElementById("myBar").style.width = scrolled + "%";
-	}
+		
 	</script>
 
 </body>
