@@ -41,7 +41,7 @@ Search results - {{query}}
                                     </span>
                                     <a href="/blog/{{i.slug}}">
                                         <div class="inner">
-                                            <img src="../../{{i.featured_image}}" alt="post-title" />
+                                            <img src="media/{{i.featured_image}}" alt="post-image" />
                                         </div>
                                     </a>
                                 </div>
@@ -112,7 +112,7 @@ Search results - {{query}}
 										<span class="number">{{ forloop.counter }}</span>
 										<a href="/blog/{{i.slug}}">
 											<div class="inner">
-												<img src="../../{{i.featured_image}}" alt="post-img" />
+												<img src="media/{{i.featured_image}}" alt="post-img" />
 											</div>
 										</a>
 									</div>
@@ -205,7 +205,8 @@ Search results - {{query}}
 							</div>		
 						</div>
 
-						</div> {% endcomment %}
+						{% comment %} </div>  {% endcomment %}
+						{% comment %} {% endcomment %} 
 
 						<!-- widget tags -->
 						<div class="widget rounded">

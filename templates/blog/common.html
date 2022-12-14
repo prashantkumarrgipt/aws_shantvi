@@ -35,7 +35,7 @@ Ocean of categories
 										</span>
 										<a href="/blog/{{i.slug}}">
 											<div class="inner">
-												<img src="../../{{i.featured_image}}" alt="post-title" />
+												<img src="../../media/{{i.featured_image}}" alt="post-image" />
 											</div>
 										</a>
 									</div>
@@ -115,13 +115,12 @@ Ocean of categories
 									<span class="number">{{ forloop.counter }}</span>
 									<a href="/blog/{{i.slug}}">
 										<div class="inner">
-											<img src="../../{{i.featured_image}}" alt="post-img" />
+											<img src="../../media/{{i.featured_image}}" alt="post-img" />
 										</div>
 									</a>
 								</div>
 								<div class="details clearfix">
-									<h6 class="post-title my-0"><a href="/blog/{{i.slug}}">{{i.title |
-											truncatechars:70}}</a></h6>
+									<h6 class="post-title my-0"><a href="/blog/{{i.slug}}">{{i.title | truncatechars:70}}</a></h6>
 									<ul class="meta list-inline mt-1 mb-0">
 										<li class="list-inline-item">{{i.timeStamp}}</li>
 									</ul>

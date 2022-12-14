@@ -6,8 +6,8 @@
 {%block head%}
 <meta property="og:title" content="{{post.title}}" />
 <meta property="og:description" content="{{post.title}}" />
-<meta property="og:url" content="http://127.0.0.1:8000/blog/{{post.slug}}" />
-<meta property="og:image" content="http://127.0.0.1:8000/blog/../../{{post.featured_image}}" />
+<meta property="og:url" content="http://13.235.77.108/blog/{{post.slug}}" />
+<meta property="og:image" content="http://13.235.77.108/blog/../../media/{{post.featured_image}}" />
 
 <meta name="description" property="og:description" content="{{post.description}}">
 <meta name="keywords" content="{% for i in all_tags %}{{i.name |safe|striptags| truncatechars:95}},{% endfor %}">
@@ -21,7 +21,7 @@
 
 {% block body %}
 <!-- cover header -->
-<section class="single-cover data-bg-image" data-bg-image=../../{{post.featured_image}}>
+<section class="single-cover data-bg-image" data-bg-image=../../media/{{post.featured_image}}>
 
     <div class="container-xl">
 
@@ -225,7 +225,7 @@
                                     <span class="number">{{ forloop.counter }}</span>
                                     <a href="/blog/{{i.slug}}">
                                         <div class="inner">
-                                            <img src="../../{{i.featured_image}}" alt="post-img" />
+                                            <img src="../../media/{{i.featured_image}}" alt="post-img" />
                                         </div>
                                     </a>
                                 </div>
