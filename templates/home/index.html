@@ -34,7 +34,9 @@
 						</div>
 						<a href="/blog/{{i.slug}}">
 							<div class="thumb rounded">
-								<div class="inner data-bg-image" data-bg-image="media/{{i.featured_image}}"></div>
+								<div class="inner data-bg-image" data-bg-image="/media/{{i.featured_image}}"></div>
+								{% comment %} <div class="inner data-bg-image" alt="ganpati bapa " data-bg-image="media/Images/ganpati.jpg"></div> {% endcomment %}
+								{% comment %} media/Images/ganpati.jpg {% endcomment %}
 							</div>
 						</a>
 					</div>
@@ -356,7 +358,8 @@
 										</span>
 										<a href="/blog/{{i.slug}}">
 											<div class="inner">
-												<img src="media/{{i.featured_image}}" alt="post-title" />
+												{% comment %} <img src="{{i.featured_image}}" alt="post-title" /> {% endcomment %}
+												<img src="media/Images/ganpati.jpg" alt="post-title" />
 											</div>
 										</a>
 									</div>

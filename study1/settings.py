@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+
+# user name : prash
+# password : vimlesh1
+
 import os
 from django.contrib.messages import constants as messages
 from pathlib import Path
@@ -24,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n7@sth7q^!_m$v2-00p(c*1k^-k-@nx3(uua*0r^c4a7c=r0$$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = True 
 
 ALLOWED_HOSTS = ['13.235.77.108','3.109.182.252','localhost', '127.0.0.1']
 
@@ -60,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # niche wale line mai dikat hai 
+    # there might some issue with below line
     # 'django.template.context_processors.media',
 ]
 
@@ -88,23 +92,23 @@ WSGI_APPLICATION = 'study1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shantvi_db',
-        'HOST': 'database.chxryybfyc34.ap-south-1.rds.amazonaws.com',
-        'USER': 'mitthu',
-        'PASSWORD': '#10022002#Prashant5#',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shantvi_db',
+#         'HOST': 'database.chxryybfyc34.ap-south-1.rds.amazonaws.com',
+#         'USER': 'mitthu',
+#         'PASSWORD': '#10022002#Prashant5#',
+#         'PORT': '3306',
+#     }
+# }
 
 
 
@@ -149,13 +153,13 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
-if DEBUG==True:
-    STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
-else:
+# if DEBUG==True:
+#     STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+# else:
     # STATIC_ROOT = '/home/ubuntu/aws_shantvi/'
     # STATICFILES_DIRS =["/home/ubuntu/shantvi/aws_shantvi/aws_shantvi/static"]
 
-    STATIC_ROOT = '/home/ubuntu/static/'
+    # STATIC_ROOT = '/home/ubuntu/static/'
 
 
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
